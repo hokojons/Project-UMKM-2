@@ -1,0 +1,34 @@
+from abc import ABC, abstractmethod
+
+class OperationStrategy(ABC):
+    @abstractmethod
+    def execute(self, a: int, b: int) -> float:
+        pass
+
+class AddOperation(OperationStrategy):
+    def execute(self, a: int, b: int) -> float:
+        return a + b
+
+class SubtractOperation(OperationStrategy):
+    def execute(self, a: int, b: int) -> float:
+        return a - b
+
+class MultiplyOperation(OperationStrategy):
+    def execute(self, a: int, b: int) -> float:
+        return a * b
+
+class DivideOperation(OperationStrategy):
+    def execute(self, a: int, b: int) -> float:
+        if b == 0:
+            raise ZeroDivisionError("Cannot divide by zero")
+        return a / b
+
+class CalculatorContext:
+    def __init__(self, strategy: OperationStrategy):
+        self.strategy = strategy
+
+    def set_strategy(self, strategy: OperationStrategy):
+        self.strategy = strategy
+    
+    def calculate(self, a: int, b: int) -> float: 
+        return self.strategy.execute(a, b)

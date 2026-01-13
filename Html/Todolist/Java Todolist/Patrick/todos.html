@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern To-Do List</title>
+    <link rel="stylesheet" href="todo.css">
+    <link rel="stylesheet" href="todo.js">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-tasks"></i> My Tasks</h1>
+            <p>Organize your day efficiently</p>
+        </div>
+        
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="What needs to be done?" autofocus>
+            <button id="addBtn"><i class="fas fa-plus"></i> Add</button>
+        </div>
+        
+        <div class="task-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+        
+        <ul id="taskList">
+            <!-- Tasks will be added here dynamically -->
+        </ul>
+        
+        <div class="summary">
+            <div class="summary-item">
+                <span class="summary-count" id="totalTasks">0</span>
+                <span class="summary-label">Total</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-count" id="completedTasks">0</span>
+                <span class="summary-label">Done</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-count" id="remainingTasks">0</span>
+                <span class="summary-label">Left</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="todo.js"></script>
+</body>
+</html>

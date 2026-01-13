@@ -1,0 +1,9 @@
+#include <stdio.h>
+
+int main(){
+  
+  printf("I love pizza\n");
+  printf("I love pizza\n");
+
+  return 0;
+}

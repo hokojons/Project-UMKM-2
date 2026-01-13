@@ -1,0 +1,40 @@
+amount = []
+price = []
+nama = []
+
+print("Masukan barang belanja")
+
+while True:
+    print("Item barang ke")
+    nama_barang = input("Masukan nama barang: ")
+    harga_barang = float(input("Harga barang: "))
+    jumlah_barang = int(input("Input jumlah barang: "))
+
+    nama.append(nama_barang)
+    price.append(harga_barang)
+    amount.append(jumlah_barang)
+
+    total_price = sum([a * p for a, p in zip(amount, price)])
+    print("Total harga: ", total_price)
+
+    data = input("Apakah ingin menambahkan barang lain? (y/n): ")
+    if data.lower() != "y":
+        break
+
+print("\nBelanja selesai!")
+print("Daftar belanja:")
+
+
+for n, p, a in zip(nama, price, amount):
+    print(f"{n}: {a} x Rp{p} = Rp{p * a}")
+
+
+total_belanja = total_price 
+print("Total belanja keseluruhan: ", total_belanja)
+
+ppn = total_belanja * 0.10
+total_belanja_dengan_ppn = total_belanja + ppn
+
+print("Total belanja keseluruhan: ", total_belanja)
+print("PPN 10%: ", ppn)
+print("Total belanja setelah PPN: ", total_belanja_dengan_ppn)

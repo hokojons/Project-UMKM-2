@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do List</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light grey background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        /* Custom styles for better aesthetics */
+        .container {
+            background-color: #ffffff;
+            border-radius: 1rem; /* More rounded corners */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Deeper shadow */
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 480px; /* Slightly wider for better content display */
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0; /* Light border for separation */
+        }
+        .task-item:last-child {
+            border-bottom: none; /* No border for the last item */
+        }
+        .task-item.completed span {
+            text-decoration: line-through;
+            color: #9ca3af; /* Grey out completed tasks */
+        }
+        .delete-btn {
+            background-color: #ef4444; /* Red for delete */
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            font-size: 0.875rem; /* Smaller font for button */
+        }
+        .delete-btn:hover {
+            background-color: #dc2626; /* Darker red on hover */
+        }
+        .add-btn {
+            background-color: #22c55e; /* Green for add */
+            color: white;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .add-btn:hover {
+            background-color: #16a34a; /* Darker green on hover */
+        }
+        input[type="text"] {
+            border: 1px solid #cbd5e0;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            flex-grow: 1;
+            margin-right: 1rem;
+            font-size: 1rem;
+            outline: none; /* Remove outline on focus */
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        input[type="text"]:focus {
+            border-color: #3b82f6; /* Blue border on focus */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25); /* Light blue shadow on focus */
+        }
+        input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 0.375rem; /* Slightly rounded checkbox */
+            cursor: pointer;
+            accent-color: #3b82f6; /* Blue checkmark */
+        }
+    </style>
+</head>
+<body class="selection:bg-blue-300">
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">My To-Do List</h1>
+
+        <div class="flex mb-6">
+            <input type="text" id="new-task" placeholder="Add a new task..." class="w-full">
+            <button id="add-task-btn" class="add-btn">Add Task</button>
+        </div>
+
+        <ul id="task-list" class="space-y-3">
+            <!-- Tasks will be dynamically added here -->
+        </ul>
+    </div>
+
+    <script>
+        // Get references to HTML elements
+        const newTaskInput = document.getElementById('new-task');
+        const addTaskBtn = document.getElementById('add-task-btn');
+        const taskList = document.getElementById('task-list');
+
+        // Function to create a new task item
+        function createTaskItem(taskText) {
+            const listItem = document.createElement('li');
+            listItem.classList.add('task-item'); // Add base styling class
+
+            // Create checkbox for completion
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.classList.add('mr-3'); // Add margin to the right of checkbox
+            checkbox.addEventListener('change', () => {
+                listItem.classList.toggle('completed', checkbox.checked); // Toggle 'completed' class
+            });
+
+            // Create span for task text
+            const taskSpan = document.createElement('span');
+            taskSpan.textContent = taskText;
+            taskSpan.classList.add('flex-grow', 'text-gray-700', 'text-lg'); // Make text grow and style
+
+            // Create delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('delete-btn'); // Add base styling class
+            deleteButton.addEventListener('click', () => {
+                listItem.remove(); // Remove the task item when clicked
+            });
+
+            // Append elements to the list item
+            listItem.appendChild(checkbox);
+            listItem.appendChild(taskSpan);
+            listItem.appendChild(deleteButton);
+
+            return listItem;
+        }
+
+        // Event listener for adding a new task
+        addTaskBtn.addEventListener('click', () => {
+            const taskText = newTaskInput.value.trim(); // Get task text and remove leading/trailing whitespace
+            if (taskText !== '') { // Only add if task text is not empty
+                const newTaskItem = createTaskItem(taskText);
+                taskList.appendChild(newTaskItem); // Add the new task to the list
+                newTaskInput.value = ''; // Clear the input field
+            }
+        });
+
+        // Allow adding task by pressing Enter key in the input field
+        newTaskInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                addTaskBtn.click(); // Simulate a click on the add button
+            }
+        });
+
+        // Example initial tasks (optional)
+        taskList.appendChild(createTaskItem('Learn HTML and CSS'));
+        taskList.appendChild(createTaskItem('Practice JavaScript basics'));
+        taskList.appendChild(createTaskItem('Build a simple web page'));
+    </script>
+</body>
+</html>
